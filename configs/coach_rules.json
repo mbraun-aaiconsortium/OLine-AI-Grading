@@ -1,0 +1,13 @@
+{
+  "pixels_per_inch": 10,
+  "first_step_distance_threshold_px": 12,
+  "second_step_distance_threshold_px": 8,
+  "run_displacement_time_s": 1.5,
+  "run_displacement_min_in": 12,
+  "knee_bend_min_deg": 90,
+  "knee_bend_max_deg": 140,
+  "elbow_bend_min_deg": 90,
+  "elbow_bend_max_deg": 140,
+  "hand_defender_distance_max_in": 6,
+  "step_timing_threshold_frames": 3
+}
