@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 player_id,mistakes
 0,"['Late first step (> 100 ms)', 'Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
 1,"['Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
@@ -13,3 +14,20 @@ player_id,mistakes
 11,"['Bad knee bend', 'Hands too far from defender']"
 12,"['Bad knee bend', 'Bad elbow bend']"
 13,['Bad knee bend']
+=======
+player_id,mistakes
+0,"['Late first step (> 100 ms)', 'Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
+1,"['Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
+2,"['Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
+3,"['Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
+4,"['Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
+5,"['Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
+6,"['Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
+7,"['Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
+8,"['Bad knee bend', 'Bad elbow bend', 'Hands too far from defender']"
+9,"['Bad knee bend', 'Hands too far from defender']"
+10,"['Bad knee bend', 'Bad elbow bend']"
+11,"['Bad knee bend', 'Hands too far from defender']"
+12,"['Bad knee bend', 'Bad elbow bend']"
+13,['Bad knee bend']
+>>>>>>> f1ca1e438716d8be1f7df7e10aef792651fc8d23
