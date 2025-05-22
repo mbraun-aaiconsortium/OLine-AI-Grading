@@ -8,12 +8,13 @@ class OLPositionTracker:
             for pid, k in frame_kps.items():
                 if k.shape[0] != 17: continue
                 hip = (k[11][1]+k[12][1])/2
-                pad = k[5][1]-hip
-                base= float(np.linalg.norm(k[15]-k[16]))
+                pad = k[5][1] - hip
+                base = float(np.linalg.norm(k[15]-k[16]))
                 data.append({
-                    'frame': t, 'player_id': pid,
+                    'frame': t,
+                    'player_id': pid,
                     'hip_height_px': hip,
-                    'pad_level_px':  pad,
+                    'pad_level_px': pad,
                     'base_width_px': base
                 })
         return data

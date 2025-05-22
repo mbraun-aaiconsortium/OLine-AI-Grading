@@ -1,15 +1,27 @@
 Open Powershell, run as administrator
 Navigate to desired directory 
 
-git clone https://github.com/mbraun-aaiconsortium/Football_AI_Grading
-cd Football_AI_Grading
-python -m venv venv
+git clone https://github.com/mbraun-aaiconsortium/oline-ai-grading
+cd Oline-Ai-Grading
+
+Install Python 3.11
+
+py -3.11 -m venv venv
+
 venv\Scripts\activate
 pip install -r requirements.txt
 
 Place video into videos directory, name practice_video.mp4
 
 python main_pipeline.py
+
+Run label-studio.exe
+
+Annotation can be done in Label-Studio, goal is to get a ground_truth.json file into the system
+
+python evaluate.py → compare against your ground_truth.json from Label Studio
+
+On the line above... the ground_truth.json file needs to be generated from label-studio... work is needed to determine how
 
 ---Chat GPT Output Below---
 

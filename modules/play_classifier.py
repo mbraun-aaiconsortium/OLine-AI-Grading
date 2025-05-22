@@ -1,52 +1,39 @@
-# modules/play_classifier.py
-
+import numpy as np
 from modules.utils import px_to_in
 
 class PlayClassifier:
     def __init__(self, cfg):
-        """
-        :param cfg: dictionary loaded from coach_rules.json
-        """
         self.cfg = cfg
 
     def classify_play(self, ol_kps_history, snap_frame, fps):
-        """
-        Classify Run vs Pass by average hip displacement over run_displacement_time_s.
-        Guards against missing or short keypoint sequences.
-        """
         window = int(self.cfg['run_displacement_time_s'] * fps)
-        disps = []
-
-        # If we never detected a snap, default to pass
         if snap_frame is None:
-            return {'play_type': 'pass', 'run_type': None}
+            return {'play_type':'pass','run_type':None}
 
-        # For each lineman's keypoint history
-        for pid, seq in ol_kps_history.items():
-            # Must have enough frames after snap to measure
-            idx0 = snap_frame
-            idx1 = snap_frame + window
-            if idx1 >= len(seq):
-                continue  # skip sequences that are too short
-
-            k0 = seq[idx0]
-            k1 = seq[idx1]
-
-            # Must have full 17 keypoints at both times
+        forwards, laterals = [], []
+        for seq in ol_kps_history.values():
+            if len(seq) <= snap_frame + window:
+                continue
+            k0, k1 = seq[snap_frame], seq[snap_frame+window]
             if k0.shape[0] < 13 or k1.shape[0] < 13:
                 continue
+            hip0 = (k0[11][1]+k0[12][1]) / 2
+            hip1 = (k1[11][1]+k1[12][1]) / 2
+            hipx0 = (k0[11][0]+k0[12][0]) / 2
+            hipx1 = (k1[11][0]+k1[12][0]) / 2
+            forwards.append(hip1-hip0)
+            laterals.append(hipx1-hipx0)
 
-            # Compute hip positions (y-coordinate) at snap and at window
-            hip0 = (k0[11][1] + k0[12][1]) / 2
-            hip1 = (k1[11][1] + k1[12][1]) / 2
-            disps.append(abs(hip1 - hip0))
+        avg_f_in = px_to_in(abs(np.mean(forwards)) if forwards else 0, self.cfg)
+        avg_l_in = px_to_in(abs(np.mean(laterals)) if laterals else 0, self.cfg)
 
-        # Compute average pixel displacement, convert to inches
-        avg_px = (sum(disps) / len(disps)) if disps else 0.0
-        avg_in = px_to_in(avg_px, self.cfg)
-
-        # Decide run vs pass
-        if avg_in >= self.cfg.get('run_displacement_min_in', 0):
-            return {'play_type': 'run', 'run_type': 'Inside Zone'}
+        if avg_f_in >= self.cfg['run_displacement_min_in']:
+            if abs(avg_l_in) < 3:
+                rt = 'Power'
+            elif avg_l_in > 0:
+                rt = 'Outside Zone'
+            else:
+                rt = 'Inside Zone'
+            return {'play_type':'run','run_type':rt}
         else:
-            return {'play_type': 'pass', 'run_type': None}
+            return {'play_type':'pass','run_type':None}
